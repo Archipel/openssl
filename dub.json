@@ -7,14 +7,20 @@
 	"libs-posix" : ["ssl", "crypto"],
 	"configurations" : [
 	    {
-		"name": "library",
-		"targetType": "sourceLibrary",
+			"name": "library",
+			"targetType": "sourceLibrary",
 	    },
+		{
+			"name": "openssl-1.1",
+			"targetType": "library",
+			"sourcePaths": ["deimos/openssl"],
+			"versions": ["OpenSSL11"]
+		},
 	    {
-		"name": "unittest",
-		"targetType": "executable",
-		"sourcePaths": ["deimos/openssl"],
-                "dflags": ["-main"],
+			"name": "unittest",
+			"targetType": "executable",
+			"sourcePaths": ["deimos/openssl"],
+			"dflags": ["-main"],
 	    }
 	]
 }

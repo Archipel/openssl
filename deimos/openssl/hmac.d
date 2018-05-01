@@ -84,14 +84,17 @@ alias hmac_ctx_st HMAC_CTX;
 
 auto HMAC_size()(HMAC_CTX* e) { return EVP_MD_size(e.md); }
 
+version (OpenSSL11) {
+    HMAC_CTX *HMAC_CTX_new();
+    void HMAC_CTX_free(HMAC_CTX *ctx);
+}
+else{
+    void HMAC_CTX_init(HMAC_CTX* ctx);
+    void HMAC_CTX_cleanup(HMAC_CTX* ctx);
+    alias HMAC_CTX_cleanup HMAC_cleanup; /* deprecated */
+}
 
-void HMAC_CTX_init(HMAC_CTX* ctx);
-void HMAC_CTX_cleanup(HMAC_CTX* ctx);
-
-alias HMAC_CTX_cleanup HMAC_cleanup; /* deprecated */
-
-int HMAC_Init(HMAC_CTX* ctx, const(void)* key, int len,
-	       const(EVP_MD)* md); /* deprecated */
+int HMAC_Init(HMAC_CTX* ctx, const(void)* key, int len, const(EVP_MD)* md); /* deprecated */
 int HMAC_Init_ex(HMAC_CTX* ctx, const(void)* key, int len,
 		  const(EVP_MD)* md, ENGINE* impl);
 int HMAC_Update(HMAC_CTX* ctx, const(ubyte)* data, size_t len);
